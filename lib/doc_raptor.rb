@@ -103,7 +103,7 @@ class DocRaptor
   end
 
   def self.status(id = self.status_id, raise_exception_on_failure = false)
-    response = get("/status/#{id}", :basic_auth => { :username => api_key }, :output => 'json')
+    response = get("/status/#{id}", :basic_auth => { :username => api_key }, :output => 'json', verify: false)
 
     if raise_exception_on_failure && !response.success?
       raise DocRaptorException::DocumentStatusFailure.new response.body, response.code
@@ -122,7 +122,7 @@ class DocRaptor
   end
 
   def self.download(key = self.download_key, raise_exception_on_failure = false)
-    response = get("/download/#{key}")
+    response = get("/download/#{key}", verify: false)
 
     if raise_exception_on_failure && !response.success?
       raise DocRaptorException::DocumentDownloadFailure.new response.body, response.code
